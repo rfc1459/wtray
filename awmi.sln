@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "awmi", "awmi\awmi.csproj", "{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wtray", "wtray\wtray.csproj", "{226B468D-DCEC-457B-AE78-A2C85AABF5DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{226B468D-DCEC-457B-AE78-A2C85AABF5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{226B468D-DCEC-457B-AE78-A2C85AABF5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{226B468D-DCEC-457B-AE78-A2C85AABF5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{226B468D-DCEC-457B-AE78-A2C85AABF5DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
