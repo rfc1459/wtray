@@ -19,23 +19,20 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
-using awmi;
+using System.Globalization;
+using Awmi;
 
-namespace wtray
+[assembly:CLSCompliant(false)]
+namespace WTray
 {
-    public class WTray : Form
+    public class WTrayApp : Form
     {
         private class DevEntry
         {
             public ToolStripMenuItem MenuItem { get; set; }
 
-            private DeviceStatus status;
             public DeviceStatus Status
             {
-                get
-                {
-                    return status;
-                }
                 set
                 {
                     switch (value)
@@ -60,7 +57,6 @@ namespace wtray
             {
                 MenuItem = new ToolStripMenuItem(menuLabel, null, evt);
                 MenuItem.Visible = false;
-                status = DeviceStatus.Unknown;
             }
         }
         /// <summary>
@@ -73,7 +69,7 @@ namespace wtray
             Version osVer = System.Environment.OSVersion.Version;
             if (osVer.Major < 6 || (osVer.Major == 6 && osVer.Minor < 1))
             {
-                MessageBox.Show(Strings.WinSevenRequired, Strings.WTrayName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowErrorMsg(Strings.WinSevenRequired, MessageBoxIcon.Error);
                 return;
             }
 
@@ -83,12 +79,12 @@ namespace wtray
             Mutex instanceMutex = new Mutex(true, mutexGUID, out isSingleInstance);
             if (!isSingleInstance)
             {
-                MessageBox.Show(Strings.SingleInstanceOnly, Strings.WTrayName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowErrorMsg(Strings.SingleInstanceOnly, MessageBoxIcon.Error);
                 return;
             }
 
             // All clear, application
-            Application.Run(new WTray());
+            Application.Run(new WTrayApp());
 
             // Prevent garbage collection of application mutex
             GC.KeepAlive(instanceMutex);
@@ -104,7 +100,7 @@ namespace wtray
 
         private System.Timers.Timer hwStatusRefreshTimer;
 
-        public WTray()
+        public WTrayApp()
         {
             try
             {
@@ -112,7 +108,7 @@ namespace wtray
             }
             catch (AwmiException)
             {
-                MessageBox.Show(Strings.FatalAwmiError, Strings.WTrayName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowErrorMsg(Strings.FatalAwmiError, MessageBoxIcon.Error);
                 Environment.Exit(1);
             }
             Camera = new DevEntry(Strings.Webcam, OnCameraToggle);
@@ -174,7 +170,7 @@ namespace wtray
             }
             catch (AwmiException)
             {
-                MessageBox.Show(Strings.CameraError, Strings.WTrayName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowErrorMsg(Strings.CameraError, MessageBoxIcon.Warning);
             }
         }
 
@@ -186,7 +182,7 @@ namespace wtray
             }
             catch (AwmiException)
             {
-                MessageBox.Show(Strings.CardReaderError, Strings.WTrayName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowErrorMsg(Strings.CardReaderError, MessageBoxIcon.Warning);
             }
         }
 
@@ -201,6 +197,7 @@ namespace wtray
             {
                 hwStatusRefreshTimer.Dispose();
                 trayIcon.Dispose();
+                wmiObj.Dispose();
             }
 
             base.Dispose(disposing);
@@ -210,6 +207,16 @@ namespace wtray
         {
             Camera.Status = wmiObj.GetDeviceStatus(DeviceIdentifier.Camera);
             CardReader.Status = wmiObj.GetDeviceStatus(DeviceIdentifier.CardReader);
+        }
+
+        private static void ShowErrorMsg(string err, MessageBoxIcon icon)
+        {
+            MessageBoxOptions opts = 0;
+            if (CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft)
+            {
+                opts = MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign;
+            }
+            MessageBox.Show(err, Strings.WTrayName, MessageBoxButtons.OK, icon, MessageBoxDefaultButton.Button1, opts);
         }
     }
 }

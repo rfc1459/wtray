@@ -30,3 +30,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 *.[Pp]ublish.xml
 *.pfx
+[Uu]pgrade[Ll]og.[Xx][Mm][Ll]
+_[Uu]pgrade[Rr]eport_[Ff]iles/*

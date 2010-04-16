@@ -18,7 +18,8 @@
 using System;
 using System.Management;
 
-namespace awmi
+[assembly:CLSCompliant(false)]
+namespace Awmi
 {
     /// <summary>
     /// Base exception class for awmi.
@@ -79,9 +80,9 @@ namespace awmi
             }
         }
 
-        public static string DeviceName(uint device_id)
+        public static string DeviceName(uint deviceId)
         {
-            switch (device_id)
+            switch (deviceId)
             {
                 case wlan_id:
                     return "Wireless LAN";
@@ -100,7 +101,7 @@ namespace awmi
     /// <summary>
     /// Power status codes.
     /// </summary>
-    public enum DeviceStatus : short
+    public enum DeviceStatus : int
     {
         Unknown = -1,
         PowerOff,
@@ -110,7 +111,7 @@ namespace awmi
     /// <summary>
     /// Public interface to EeePC ACPI-WMI object.
     /// </summary>
-    public class AwmiInterface
+    public class AwmiInterface: IDisposable
     {
         private ManagementClass asusCls;
         private ManagementObject asusWMI;
@@ -164,17 +165,17 @@ namespace awmi
         /// <summary>
         /// Get power status for a given device.
         /// </summary>
-        /// <param name="device_id">Device identifier</param>
+        /// <param name="deviceId">Device identifier</param>
         /// <returns>Power status for given device or Unknown if device is not present</returns>
         /// <seealso cref="DeviceStatus"/>
-        public DeviceStatus GetDeviceStatus(uint device_id)
+        public DeviceStatus GetDeviceStatus(uint deviceId)
         {
             try
             {
                 // Build input params
                 string meth = "device_status";
                 ManagementBaseObject inParams = asusCls.GetMethodParameters(meth);
-                inParams["device_id"] = device_id;
+                inParams["device_id"] = deviceId;
 
                 // Call object
                 ManagementBaseObject outParams = asusWMI.InvokeMethod(meth, inParams, null);
@@ -237,7 +238,7 @@ namespace awmi
             }
         }
 
-        private void SetDeviceStatus(uint device_id, bool power_status)
+        private void SetDeviceStatus(uint deviceId, bool powerStatus)
         {
             try
             {
@@ -245,8 +246,8 @@ namespace awmi
                 string meth = "device_ctrl";
                 ManagementBaseObject inParams = asusCls.GetMethodParameters(meth);
 
-                inParams["device_id"] = device_id;
-                inParams["ctrl_param"] = power_status ? 1 : 0;
+                inParams["device_id"] = deviceId;
+                inParams["ctrl_param"] = powerStatus ? 1 : 0;
 
                 asusWMI.InvokeMethod(meth, inParams, null);
             }
@@ -258,6 +259,21 @@ namespace awmi
             {
                 throw new AwmiException("SetDeviceStatus failure", e);
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                asusCls.Dispose();
+                asusWMI.Dispose();
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

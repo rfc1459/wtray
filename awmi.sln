@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C# Express 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "awmi", "awmi\awmi.csproj", "{D28D1985-E420-4B3C-8D8D-A82DDCD6B14D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wtray", "wtray\wtray.csproj", "{226B468D-DCEC-457B-AE78-A2C85AABF5DE}"

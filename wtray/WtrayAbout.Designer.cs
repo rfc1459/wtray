@@ -1,4 +1,4 @@
-﻿namespace wtray
+﻿namespace WTray
 {
     partial class WtrayAbout
     {
