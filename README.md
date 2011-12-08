@@ -82,3 +82,4 @@ License](http://creativecommons.org/licenses/by-nc-sa/3.0/).
 [ACPI-WMI]: http://msdn.microsoft.com/en-us/windows/hardware/gg463463
 [issue]: https://github.com/rfc1459/wtray/issues/new
 [downloads]: https://github.com/rfc1459/wtray/downloads
+[wiki]: https://github.com/rfc1459/wtray/wiki
