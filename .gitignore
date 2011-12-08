@@ -1,7 +1,5 @@
-syntax: glob
-
-[Bb]in/*
-[Oo]bj/*
+[Bb]in/
+[Oo]bj/
 *.obj
 *.exe
 *.pdb
@@ -23,7 +21,7 @@ syntax: glob
 *.sbr
 *.scc
 *.config
-[Dd]ebug/*
+[Dd]ebug/
 [Rr]elease*/
 _ReSharper*/
 [Bb]uild[Ll]og.*
@@ -31,4 +29,4 @@ _ReSharper*/
 *.[Pp]ublish.xml
 *.pfx
 [Uu]pgrade[Ll]og.[Xx][Mm][Ll]
-_[Uu]pgrade[Rr]eport_[Ff]iles/*
+_[Uu]pgrade[Rr]eport_[Ff]iles/
